@@ -39,7 +39,9 @@ def main(args):
     process.sendline(passwd)
     process.expect('Would you like to enter a view-only password (y/n)?', timeout=4)
     process.sendline('n')
-     
+    cmd = ['chmod', '600', f'/home/{args.netid}/.vnc/passwd']
+    subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=False)
+
     result = os.system(f'systemctl restart vnc-{args.netid}-{port_num}.service')
     if os.WEXITSTATUS(result) == 0:
         logging.info(f"Restarted vnc-{args.netid}-{port_num}.service")

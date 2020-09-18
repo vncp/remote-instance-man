@@ -30,5 +30,11 @@ for cfg in unit_cfgs:
         print(port, user)
         if os.path.isfile(f'./units/vnc-{user}.service'):
             os.rename(f'units/vnc-{user}.service', f'units/vnc-{user}-{port}.service')
-            print(f'Renaming units/vnc-{user}.service to units/vnc-{user}-{port}.service)')
+            print(f'Renaming units/vnc-{user}.service to units/vnc-{user}-{port}.service')
+        if os.path.isfile(f'./units/vnc-{user}-{port}.service'):
+            cmd = ['systemctl', 'stop', f'vnc-{user}.service']
+            subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=False)
+            cmd = ['systemctl', 'restart', f'vnc-{user}-{port}.service]']
+            subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=False)
+            
 
