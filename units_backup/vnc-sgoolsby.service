@@ -1,0 +1,17 @@
+[Unit]
+Description=Remote VNC Instance sgoolsby
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Environment=NETID=sgoolsby PORT=5140 COURSE=
+User=sgoolsby
+Restart=always
+RestartSec=10
+ExecStart=/usr/local/bin/vncserver :${PORT} -geometry 1368x768 -rfbauth /home/${NETID}/.vnc/passwd -SecurityTypes=VNCAuth -xstartup /opt/vnc/xstartup -ZlibLevel 9
+ExecStop=/usr/local/bin/vncserver -kill :${PORT}
+MemoryMax=4096M
+#MemoryLimit=4096M
+CPUQuota=200%
+#TimeoutStopSec=0
+Type=forking
